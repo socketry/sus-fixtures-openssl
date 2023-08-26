@@ -55,8 +55,6 @@ module Sus
 				
 				def server_context
 					@server_context ||= ::OpenSSL::SSL::SSLContext.new.tap do |context|
-						context.verify_hostname = true
-						
 						context.servername_cb = Proc.new do |socket, name|
 							if hosts.include? name
 								socket.hostname = name
