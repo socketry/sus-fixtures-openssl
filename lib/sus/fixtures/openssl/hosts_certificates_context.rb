@@ -8,9 +8,14 @@ require_relative 'certificate_authority_context'
 module Sus
 	module Fixtures
 		module OpenSSL
-			module HostCertificatesContext
+			module HostsCertificatesContext
 				include CertificateAuthorityContext
-			
+				
+				# Override this to provide a list of host names.
+				def hosts
+					[]
+				end
+				
 				def keys
 					@keys ||= Hash[
 						hosts.collect{|name| [name, ::OpenSSL::PKey::RSA.new(2048)]}
@@ -50,6 +55,8 @@ module Sus
 				
 				def server_context
 					@server_context ||= ::OpenSSL::SSL::SSLContext.new.tap do |context|
+						context.verify_hostname = true
+						
 						context.servername_cb = Proc.new do |socket, name|
 							if hosts.include? name
 								socket.hostname = name
