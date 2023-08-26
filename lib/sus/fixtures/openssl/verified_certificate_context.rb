@@ -8,20 +8,18 @@ require_relative 'certificate_authority_context'
 module Sus
 	module Fixtures
 		module OpenSSL
-			module HostCertificatesContext
-				include CertificateAuthorityContext
-				
+			module VerifiedCertificateContext
 				def server_context
-					::OpenSSLSSL::SSLContext.new.tap do |context|
+					::OpenSSL::SSL::SSLContext.new.tap do |context|
 						context.cert = certificate
 						context.key = key
 					end
 				end
 
 				def client_context
-					::OpenSSLSSL::SSLContext.new.tap do |context|
+					::OpenSSL::SSL::SSLContext.new.tap do |context|
 						context.cert_store = certificate_store
-						context.verify_mode = ::OpenSSLSSL::VERIFY_PEER
+						context.verify_mode = ::OpenSSL::SSL::VERIFY_PEER
 					end
 				end
 			end

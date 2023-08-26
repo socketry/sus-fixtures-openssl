@@ -13,7 +13,7 @@ module Sus
 				
 				# The private key to use on the server side:
 				def key
-					::OpenSSL::PKey::RSA.new(2048)
+					@key ||= ::OpenSSL::PKey::RSA.new(2048)
 				end
 				
 				def certificate_name

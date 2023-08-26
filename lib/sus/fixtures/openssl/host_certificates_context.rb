@@ -49,12 +49,12 @@ module Sus
 				end
 				
 				def server_context
-					@server_context ||= ::OpenSSLSSL::SSLContext.new.tap do |context|
+					@server_context ||= ::OpenSSL::SSL::SSLContext.new.tap do |context|
 						context.servername_cb = Proc.new do |socket, name|
 							if hosts.include? name
 								socket.hostname = name
 								
-								::OpenSSLSSL::SSLContext.new.tap do |context|
+								::OpenSSL::SSL::SSLContext.new.tap do |context|
 									context.cert = certificates[name]
 									context.key = keys[name]
 								end
@@ -64,9 +64,9 @@ module Sus
 				end
 				
 				def client_context
-					@client_context ||= ::OpenSSLSSL::SSLContext.new.tap do |context|
+					@client_context ||= ::OpenSSL::SSL::SSLContext.new.tap do |context|
 						context.cert_store = certificate_store
-						context.verify_mode = ::OpenSSLSSL::VERIFY_PEER
+						context.verify_mode = ::OpenSSL::SSL::VERIFY_PEER
 					end
 				end
 			end
