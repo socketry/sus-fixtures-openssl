@@ -28,7 +28,7 @@ module Sus
 						
 						# We set the validity period to the past, so the certificate is invalid:
 						certificate.not_before = Time.now - 3600
-						certificate.not_after = Time.now
+						certificate.not_after = Time.now - 10
 						
 						extension_factory = ::OpenSSL::X509::ExtensionFactory.new()
 						extension_factory.subject_certificate = certificate

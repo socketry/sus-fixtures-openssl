@@ -30,7 +30,7 @@ module Sus
 						certificate.serial = 1
 						certificate.version = 2
 						
-						certificate.not_before = Time.now
+						certificate.not_before = Time.now - 10
 						certificate.not_after = Time.now + 3600
 						
 						extension_factory = ::OpenSSL::X509::ExtensionFactory.new
